@@ -11,7 +11,7 @@ public class Operations2 {
         final Account a = new Account(1000);
         final Account b = new Account(2000);
         for (int lcv = 0; lcv < 10; lcv++) {
-            service.submit(new Transfer(a, b, (int) (1000 * Math.random())));
+            service.submit(new Transfer(lcv, a, b, 1000));
         }
         service.shutdown();
     }
