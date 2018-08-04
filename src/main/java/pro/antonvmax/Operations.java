@@ -11,6 +11,7 @@ public class Operations {
 
         new Thread(new Runnable() {
             public void run() {
+                System.out.println("Begin transfer a->b");
                 try {
                     transfer(a, b, 500);
                 } catch (InsufficientResourcesException e) {
@@ -23,6 +24,7 @@ public class Operations {
 
         new Thread(new Runnable() {
             public void run() {
+                System.out.println("Begin transfer b->a");
                 try {
                     transfer(b, a, 300);
                 } catch (InsufficientResourcesException e) {
@@ -35,11 +37,20 @@ public class Operations {
     }
 
     private static void transfer(Account acc1, Account acc2, int amount) throws InsufficientResourcesException {
-        if (acc1.getBalance() < amount) {
-            throw new InsufficientResourcesException();
+        synchronized (acc1) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            synchronized (acc2) {
+                if (acc1.getBalance() < amount) {
+                    throw new InsufficientResourcesException();
+                }
+                acc1.withdraw(amount);
+                acc2.deposit(amount);
+            }
         }
-        acc1.withdraw(amount);
-        acc2.deposit(amount);
     }
 
 }
