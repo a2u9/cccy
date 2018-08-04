@@ -75,6 +75,7 @@ public class Operations {
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
+                    acc2.incFailedTransferCount();
                     System.out.println("Error in lock 2");
                 } finally {
                     System.out.println("Unlocked acc1 in thread " + Thread.currentThread().getName());
@@ -85,6 +86,7 @@ public class Operations {
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
+            acc1.incFailedTransferCount();
             System.out.println("Error in lock 1");
         }
     }
