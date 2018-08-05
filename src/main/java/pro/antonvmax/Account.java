@@ -29,6 +29,10 @@ public class Account {
         return lock;
     }
 
+    public AtomicInteger getFailCounter() {
+        return failCounter;
+    }
+
     public void incFailedTransferCount() {
         failCounter.incrementAndGet();
     }
